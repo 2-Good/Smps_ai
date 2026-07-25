@@ -1,0 +1,171 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-glass: var(--glass);
+  --color-glass-border: var(--glass-border);
+  --color-gold: var(--gold);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.4);
+}
+
+:root {
+  color-scheme: light;
+  --background: oklch(0.975 0.012 85);
+  --foreground: oklch(0.3 0.07 255);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.3 0.07 255);
+
+  --primary: oklch(0.36 0.09 258);
+  --primary-foreground: oklch(0.98 0.01 85);
+
+  --accent: oklch(0.58 0.1 65);
+  --accent-foreground: oklch(0.98 0.01 85);
+
+  --muted: oklch(0.94 0.02 80);
+  --muted-foreground: oklch(0.5 0.04 258);
+
+  --border: oklch(0.9 0.02 80);
+  --input: oklch(0.92 0.02 80);
+  --ring: oklch(0.36 0.09 258);
+
+  --glass: oklch(1 0 0 / 0.55);
+  --glass-border: oklch(1 0 0 / 0.6);
+  --gold: oklch(0.62 0.1 68);
+
+  --radius: 0.9rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+}
+
+/* Liquid glass surface */
+.glass {
+  background: linear-gradient(
+    135deg,
+    oklch(1 0 0 / 0.68) 0%,
+    oklch(1 0 0 / 0.32) 100%
+  );
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid oklch(1 0 0 / 0.65);
+  box-shadow:
+    0 8px 32px oklch(0.36 0.09 258 / 0.14),
+    0 1px 1px oklch(1 0 0 / 0.5),
+    inset 0 1px 0 oklch(1 0 0 / 0.75),
+    inset 0 -1px 0 oklch(0.36 0.09 258 / 0.05);
+}
+
+.glass-strong {
+  background: linear-gradient(
+    135deg,
+    oklch(1 0 0 / 0.82) 0%,
+    oklch(1 0 0 / 0.48) 100%
+  );
+  backdrop-filter: blur(36px) saturate(210%);
+  -webkit-backdrop-filter: blur(36px) saturate(210%);
+  border: 1px solid oklch(1 0 0 / 0.75);
+  box-shadow:
+    0 20px 60px oklch(0.36 0.09 258 / 0.2),
+    0 1px 1px oklch(1 0 0 / 0.6),
+    inset 0 1px 0 oklch(1 0 0 / 0.85),
+    inset 0 -1px 0 oklch(0.36 0.09 258 / 0.06);
+}
+
+/* Glass reflection sheen */
+.glass-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.glass-sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    oklch(1 0 0 / 0.35) 48%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.9s ease;
+  pointer-events: none;
+}
+.glass-sheen:hover::after {
+  transform: translateX(100%);
+}
+
+@keyframes blob-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -40px) scale(1.08);
+  }
+  66% {
+    transform: translate(-25px, 25px) scale(0.95);
+  }
+}
+
+.animate-blob {
+  animation: blob-float 18s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+.animate-glow {
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+.scroll-glass::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-glass::-webkit-scrollbar-thumb {
+  background: oklch(0.36 0.09 258 / 0.35);
+  border-radius: 999px;
+}
+.scroll-glass::-webkit-scrollbar-track {
+  background: transparent;
+}
